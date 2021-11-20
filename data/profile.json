@@ -1,0 +1,19 @@
+[
+  {
+    "firstName": "Pooja Shantaram",
+    "lastName": "Nangude",
+    "handle": "pooja_nangude",
+    "profilePicture": "",
+    "bannerPicture": "",
+    "bio": "Graduate Student, Northeastern University, Khoury College of Computer Science. Open to opportunities in full stack and web development.",
+    "website": "youtube.com/poojanangude",
+    "location": "Boston, MA",
+    "dateOfBirth": "1998-05-18",
+    "dateJoined": "4/2009",
+    "followingCount": "312",
+    "followersCount": "180",
+    "numberOfTweets": "5,199",
+    "profileImage": "https://pbs.twimg.com/media/D8dDZukXUAAXLdY.jpg",
+    "backgroundImage": "https://infinigeek.com/assets/common-programming-languages.png"
+  }
+]
