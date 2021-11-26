@@ -1,0 +1,133 @@
+>
+> show  dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> use  webdev
+switched to db webdev
+> show  dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> use  webdev
+switched to db webdev
+> db.movies.insert({title: 'Aliens', rating: 4.5})
+WriteResult({ "nInserted" : 1 })
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+webdev  0.000GB
+> db.movies.insert({title: 'Terminator', rating: 4.8})
+WriteResult({ "nInserted" : 1 })
+> db.movies.insert({title: 'Avatar', rating: 4.7})
+WriteResult({ "nInserted" : 1 })
+> db.movies.insert({title: 'Dune', rating: 4.9})
+WriteResult({ "nInserted" : 1 })
+> db.movies.find();
+{ "_id" : ObjectId("619c2a066cc8e4d9b86c8014"), "title" : "Aliens", "rating" : 4.5 }
+{ "_id" : ObjectId("619c2a366cc8e4d9b86c8015"), "title" : "Terminator", "rating" : 4.8 }
+{ "_id" : ObjectId("619c2a476cc8e4d9b86c8016"), "title" : "Avatar", "rating" : 4.7 }
+{ "_id" : ObjectId("619c2a556cc8e4d9b86c8017"), "title" : "Dune", "rating" : 4.9 }
+> db.movies.find({_id: ObjectId("619c2a066cc8e4d9b86c8014")});
+{ "_id" : ObjectId("619c2a066cc8e4d9b86c8014"), "title" : "Aliens", "rating" : 4.5 }
+> db.movies.find({_id: ObjectId("619c2a556cc8e4d9b86c8017")});
+{ "_id" : ObjectId("619c2a556cc8e4d9b86c8017"), "title" : "Dune", "rating" : 4.9 }
+> db.movies.find({title: 'Aliens'});
+{ "_id" : ObjectId("619c2a066cc8e4d9b86c8014"), "title" : "Aliens", "rating" : 4.5 }
+> db.movies.find().pretty()
+{
+        "_id" : ObjectId("619c2a066cc8e4d9b86c8014"),
+        "title" : "Aliens",
+        "rating" : 4.5
+}
+{
+        "_id" : ObjectId("619c2a366cc8e4d9b86c8015"),
+        "title" : "Terminator",
+        "rating" : 4.8
+}
+{
+        "_id" : ObjectId("619c2a476cc8e4d9b86c8016"),
+        "title" : "Avatar",
+        "rating" : 4.7
+}
+{
+        "_id" : ObjectId("619c2a556cc8e4d9b86c8017"),
+        "title" : "Dune",
+        "rating" : 4.9
+}
+> db.movies.updateOne({title: 'Avatar'}, {rating: 4.9})
+uncaught exception: Error: the update operation document must contain atomic operators :
+DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:565:19
+@(shell):1:1
+> db.movies.find().pretty()
+{
+        "_id" : ObjectId("619c2a066cc8e4d9b86c8014"),
+        "title" : "Aliens",
+        "rating" : 4.5
+}
+{
+        "_id" : ObjectId("619c2a366cc8e4d9b86c8015"),
+        "title" : "Terminator",
+        "rating" : 4.8
+}
+{
+        "_id" : ObjectId("619c2a476cc8e4d9b86c8016"),
+        "title" : "Avatar",
+        "rating" : 4.7
+}
+{
+        "_id" : ObjectId("619c2a556cc8e4d9b86c8017"),
+        "title" : "Dune",
+        "rating" : 4.9
+}
+> db.movies.updateOne({title: 'Avatar'}, {rating: 4.9});
+uncaught exception: Error: the update operation document must contain atomic operators :
+DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:565:19
+@(shell):1:1
+> db.movies.updateOne({_id: ObjectId("618708ce2f9dcdbdb306a5d7")}, {rating: 4.5});
+uncaught exception: Error: the update operation document must contain atomic operators :
+DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:565:19
+@(shell):1:1
+>
+>
+>
+> db.movies.updateOne({title: 'Avatar'}, {$set: {rating: 4.9}});
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.movies.find().pretty()
+{
+        "_id" : ObjectId("619c2a066cc8e4d9b86c8014"),
+        "title" : "Aliens",
+        "rating" : 4.5
+}
+{
+        "_id" : ObjectId("619c2a366cc8e4d9b86c8015"),
+        "title" : "Terminator",
+        "rating" : 4.8
+}
+{
+        "_id" : ObjectId("619c2a476cc8e4d9b86c8016"),
+        "title" : "Avatar",
+        "rating" : 4.9
+}
+{
+        "_id" : ObjectId("619c2a556cc8e4d9b86c8017"),
+        "title" : "Dune",
+        "rating" : 4.9
+}
+> db.movies.updateOne({_id: ObjectId("618708ce2f9dcdbdb306a5d7")}, {$set: {rating: 4.5}});
+{ "acknowledged" : true, "matchedCount" : 0, "modifiedCount" : 0 }
+> db.movies.deleteOne({_id: ObjectId("618708ce2f9dcdbdb306a5d7")});
+{ "acknowledged" : true, "deletedCount" : 0 }
+> db.movies.find();
+{ "_id" : ObjectId("619c2a066cc8e4d9b86c8014"), "title" : "Aliens", "rating" : 4.5 }
+{ "_id" : ObjectId("619c2a366cc8e4d9b86c8015"), "title" : "Terminator", "rating" : 4.8 }
+{ "_id" : ObjectId("619c2a476cc8e4d9b86c8016"), "title" : "Avatar", "rating" : 4.9 }
+{ "_id" : ObjectId("619c2a556cc8e4d9b86c8017"), "title" : "Dune", "rating" : 4.9 }
+> db.movies.deleteOne({_id: ObjectId("619c2a066cc8e4d9b86c8014")});
+{ "acknowledged" : true, "deletedCount" : 1 }
+> db.movies.find();
+{ "_id" : ObjectId("619c2a366cc8e4d9b86c8015"), "title" : "Terminator", "rating" : 4.8 }
+{ "_id" : ObjectId("619c2a476cc8e4d9b86c8016"), "title" : "Avatar", "rating" : 4.9 }
+{ "_id" : ObjectId("619c2a556cc8e4d9b86c8017"), "title" : "Dune", "rating" : 4.9 }
+>

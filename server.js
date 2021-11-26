@@ -1,3 +1,6 @@
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/webdev');
+
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -19,6 +22,10 @@ app.use(function(req, res, next) {
 require('./services/tweeter-service')(app);
 require('./services/movies-service')(app);
 require('./services/profile-service')(app);
+require('./movies/service')(app);
+require('./tweets/service')(app);
+require('./whotofollow/service')(app);
+require('./profile/service')(app);
 
 app.get('/hello', (req, res) => {
     res.send('Hello World!');
